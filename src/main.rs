@@ -9,9 +9,10 @@ use std::path::Path;
 
 fn main() {
     // File hosts.txt must exist in the current path
-    let mut counter = 1;
+    let mut counter = 0;
     let mut first_int = 0;
     let mut last_int = 0;
+    let mut reversed = String::new();
     //let mut first_int_string ="";
    // let mut last_int_string = "";
     let mut sum_total = 0;
@@ -23,10 +24,13 @@ fn main() {
                 println!("{}", line_string);
                 let reg_normal = Regex::new(r"one|two|three|four|five|six|seven|eight|nine|zero|[0-9]").unwrap();
                 let reg_weird = Regex::new(r"eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|orez|[0-9]").unwrap();
-                let caps_weird = reg_weird.captures(line_string.as_str()).unwrap();
-                let caps_normal = reg_normal.captures(line_string.as_str()).unwrap();
-               // let caps2 = reg_normal.captures(line_string.as_str()).unwrap();
+                 let caps_normal = reg_normal.captures(line_string.as_str()).unwrap();
+                               let reversed = line_string.chars().rev().collect::<String>();
+                 let caps_weird = reg_weird.captures(reversed.as_str()).unwrap();
+
                
+               // let caps2 = reg_normal.captures(line_string.as_str()).unwrap();
+               counter = counter+ 1;
                // println!("first catch {}", caps_normal[0].to_owned());
                 println!("Line: {} F: {} L: {}",counter, caps_normal[0].to_owned(),  caps_weird[0].to_owned() );
                //assert_eq!("toady", &caps2[0]);
@@ -36,7 +40,7 @@ fn main() {
         sum_total = sum_total + return_merdged_number(first_int,last_int);
                 }//if line string ok
                 
-                counter = counter+ 1;
+                
             }
         }
      //   println!("{}",sum_total);
