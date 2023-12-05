@@ -25,14 +25,15 @@ fn main() {
                 let reg_normal = Regex::new(r"one|two|three|four|five|six|seven|eight|nine|zero|[0-9]").unwrap();
                 let reg_weird = Regex::new(r"eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|orez|[0-9]").unwrap();
                  let caps_normal = reg_normal.captures(line_string.as_str()).unwrap();
-                               let reversed = line_string.chars().rev().collect::<String>();
+                let reversed = line_string.chars().rev().collect::<String>();
                  let caps_weird = reg_weird.captures(reversed.as_str()).unwrap();
 
                
                // let caps2 = reg_normal.captures(line_string.as_str()).unwrap();
                counter = counter+ 1;
                // println!("first catch {}", caps_normal[0].to_owned());
-                println!("Line: {} F: {} L: {}",counter, caps_normal[0].to_owned(),  caps_weird[0].to_owned() );
+                println!("Line: {} F: {} L: {}, F1:{} L1:{}",counter, caps_normal[0].to_owned(),  caps_weird[0].to_owned(), return_format_number(caps_normal[0].to_owned()), return_format_number(caps_weird[0].to_owned()));
+               sum_total = sum_total + return_string_number(return_format_number(caps_normal[0].to_owned()), return_format_number(caps_weird[0].to_owned()));
                //assert_eq!("toady", &caps2[0]);
                 }
         //println!("Line# {} F: {} L:{}",counter,first_int,last_int );
@@ -42,13 +43,27 @@ fn main() {
                 
                 
             }
-        }
-     //   println!("{}",sum_total);
+        
+        println!("Sum Total: {}",sum_total);
+    }
 
-fn normal_fist_match(line: String) -> String{
-    return String::from("lala");
+fn return_format_number(num_data: String) -> String{
+    match num_data.as_str(){
+        "one" | "eno" | "1" => return String::from("1"),
+        "two" | "owt" | "2" => return String::from("2"),
+        "three" | "eerht" | "3" => return String::from("3"),
+        "four" | "ruof" | "4" => return String::from("4"),
+        "five" | "evif" | "5" => return String::from("5"),
+        "six" | "xis" | "6" => return String::from("6"),
+        "seven" | "neves" | "7" => return String::from("7"),
+        "eight" | "thgie" | "8" => return String::from("8"),
+        "nine" | "enin" | "9" => return String::from("9"),
+        "zero" | "orez" | "0" => return String::from("0"),
+        _=> return String::from("1000")//error catch here
+    }
+
+    return String::from("1000");//error catch here
 }
-
 
 // The output is wrapped in a Result to allow matching on errors
 // Returns an Iterator to the Reader of the lines of the file.
@@ -57,6 +72,7 @@ where P: AsRef<Path>, {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
 }
+
 
 fn return_int_instance(line: String) -> i32{
     for character in line.chars() {
@@ -68,6 +84,9 @@ fn return_int_instance(line: String) -> i32{
     return 999; //can return eror?
 }
 
+fn return_string_number(first_string:String,last_string:String) ->i32{
+    return String::from(first_string + &last_string).parse::<i32>().unwrap();
+}
 fn return_merdged_number(first: i32, last: i32) -> i32 {
     //String::from(first.to_string()+last.to_string());
     let first_string = String::from(first.to_string());
